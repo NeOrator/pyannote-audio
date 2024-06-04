@@ -163,8 +163,9 @@ class SpeakerDiarization(SpeakerDiarizationMixin, Pipeline):
             metric = "not_applicable"
 
         else:
+            self.embedding = "pyannote/embedding"
             self._embedding = PretrainedSpeakerEmbedding(
-                self.embedding, use_auth_token=use_auth_token
+                self.embedding, use_auth_token=use_auth_token, device=torch.device('cuda') #TODO добавить выбор
             )
             self._audio = Audio(sample_rate=self._embedding.sample_rate, mono="downmix")
             metric = self._embedding.metric
