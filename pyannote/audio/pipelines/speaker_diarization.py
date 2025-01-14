@@ -123,6 +123,7 @@ class SpeakerDiarization(SpeakerDiarizationMixin, Pipeline):
         segmentation_batch_size: int = 1,
         der_variant: Optional[dict] = None,
         use_auth_token: Union[Text, None] = None,
+        embedding_model_device: str = 'cuda'
     ):
         super().__init__()
 
@@ -165,7 +166,7 @@ class SpeakerDiarization(SpeakerDiarizationMixin, Pipeline):
         else:
             self.embedding = "pyannote/embedding"
             self._embedding = PretrainedSpeakerEmbedding(
-                self.embedding, use_auth_token=use_auth_token, device=torch.device('cuda') #TODO добавить выбор
+                self.embedding, use_auth_token=use_auth_token, device=torch.device(embedding_model_device) 
             )
             self._audio = Audio(sample_rate=self._embedding.sample_rate, mono="downmix")
             metric = self._embedding.metric
