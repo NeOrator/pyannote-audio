@@ -134,7 +134,8 @@ visit https://hf.co/{model_id} to accept the user conditions."""
             pipeline_name, default_module_name="pyannote.pipeline.blocks"
         )
         params = config["pipeline"].get("params", {})
-        params = kwargs.update(params)
+        kwargs.update(params)
+        params = kwargs
         params.setdefault("use_auth_token", use_auth_token)
         pipeline = Klass(**params)
 
